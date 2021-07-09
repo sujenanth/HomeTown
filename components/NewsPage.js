@@ -24,6 +24,7 @@ import {ShakeEvent} from "../utils/ShakeEvent";
 import * as Haptics from "expo-haptics";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {rgbaColor} from "react-native-reanimated/src/reanimated2/Colors";
+import {apikey} from "../utils/api-keys";
 
 
 const counter = [3,3,3];
@@ -93,11 +94,11 @@ export default function NewsPage(){
     async function fetchNews(category, query){
         // https://newsapi.org/v2/top-headlines?country=ch&category=general&apiKey=c79884f0c42e4b51b7ea042b0f3d0976
         let response;
-        !query ? response = await fetch(`https://newsapi.org/v2/top-headlines?country=ch&category=${category}&apiKey=7aa876d0069f440ea2f491b7d2d7d9bc`)
-            : response = await fetch(`https://newsapi.org/v2/top-headlines?q=${query}&apiKey=7aa876d0069f440ea2f491b7d2d7d9bc`)
+        !query ? response = await fetch(`https://newsapi.org/v2/top-headlines?country=ch&category=${category}&apiKey=${apikey.news}`)
+            : response = await fetch(`https://newsapi.org/v2/top-headlines?q=${query}&apiKey=${apikey.news}`)
         const json = response.json();
         json.then((response) => {
-            if(!response.status === 'error'){
+            if(response.status !== 'error'){
                 setCategory(category.charAt(0).toUpperCase() + category.slice(1));
                 setNews(response)
                 setFade(true)

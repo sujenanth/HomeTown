@@ -24,6 +24,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import {ShakeEvent} from "../utils/ShakeEvent";
 import {useTheme} from "@react-navigation/native";
 import {Searchbar} from "react-native-paper";
+import {apikey} from "../utils/api-keys";
 
 export default function WeatherApp(React$Node){
 
@@ -53,7 +54,7 @@ export default function WeatherApp(React$Node){
     async function fetchWeather(searchLocation){
         setFade(false)
         let search = searchLocation ? searchLocation : location
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&APPID=a77f3f987f76c8f12f714f77f0975885`)
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&APPID=${apikey.weather}`)
         const json = response.json();
         json
             .then((weather) => {
