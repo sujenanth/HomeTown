@@ -104,7 +104,7 @@ export default function ToDoApp(){
                     padding={5}
                     width={'100%'}
                 >
-                    <Heading color={'white'}>List</Heading>
+                    <Heading color={'white'}>Lists</Heading>
                     <Divider top={2} marginBottom={5} opacity={0.2} w={'40%'}/>
                 </Container>
                 <FlatList
