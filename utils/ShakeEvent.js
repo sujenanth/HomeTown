@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Accelerometer} from "expo-sensors";
 
-const THRESHOLD = 250;
+const THRESHOLD = 150;
 
 export class ShakeEvent{
     static addListener(handler){

@@ -18,10 +18,12 @@ import {NativeBaseProvider} from "native-base/src/core/NativeBaseProvider";
 import {useTheme} from "@react-navigation/native";
 import Header from "./Header";
 import NewsStagger from "./NewsStagger";
-import {Linking, TouchableOpacity} from "react-native";
+import {Linking, Share, TouchableOpacity} from "react-native";
 import {Searchbar} from "react-native-paper";
 import {ShakeEvent} from "../utils/ShakeEvent";
 import * as Haptics from "expo-haptics";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {rgbaColor} from "react-native-reanimated/src/reanimated2/Colors";
 
 
 const counter = [3,3,3];
@@ -49,6 +51,29 @@ export default function NewsPage(){
     const [searchQuery, setSearchQuery] = useState("");
 
 
+    const onShare = async (title,url) => {
+        try{
+            const result = await Share.share({
+                message: title,
+                url: url
+            })
+            if(result.action === Share.sharedAction){
+                if(result.activityType){
+                    console.log("shared activity Type")
+                }
+                else{
+                    console.log("shared")
+                }
+            }
+            else if(result.action === Share.dismissedAction){
+                console.log("dismissed")
+            }
+        } catch (error){
+            alert(error.message)
+        }
+
+    }
+
     useEffect(() => {
         ShakeEvent.addListener(() => {
             setFade(false)
@@ -68,14 +93,19 @@ export default function NewsPage(){
     async function fetchNews(category, query){
         // https://newsapi.org/v2/top-headlines?country=ch&category=general&apiKey=c79884f0c42e4b51b7ea042b0f3d0976
         let response;
-
-        !query ? response = await fetch(`https://newsapi.org/v2/top-headlines?country=ch&category=${category}&apiKey=c79884f0c42e4b51b7ea042b0f3d0976`)
-            : response = await fetch(`https://newsapi.org/v2/top-headlines?q=${query}&apiKey=c79884f0c42e4b51b7ea042b0f3d0976`)
+        !query ? response = await fetch(`https://newsapi.org/v2/top-headlines?country=ch&category=${category}&apiKey=7aa876d0069f440ea2f491b7d2d7d9bc`)
+            : response = await fetch(`https://newsapi.org/v2/top-headlines?q=${query}&apiKey=7aa876d0069f440ea2f491b7d2d7d9bc`)
         const json = response.json();
         json.then((response) => {
-            setCategory(category.charAt(0).toUpperCase() + category.slice(1));
-            setNews(response)
-            setFade(true)
+            if(!response.status === 'error'){
+                setCategory(category.charAt(0).toUpperCase() + category.slice(1));
+                setNews(response)
+                setFade(true)
+            }
+            else{
+                hasError(true)
+            }
+
         }).catch((error) => {
             hasError(true)
         })
@@ -111,7 +141,7 @@ export default function NewsPage(){
             <Fade in={fade}>
                 <ScrollView>
                     {
-                        loaded && news ? (
+                        !error && loaded && news ? (
                             <Box
                                 justifyContent={'center'}
                                 alignSelf={'center'}
@@ -128,11 +158,7 @@ export default function NewsPage(){
                                     {
                                         loaded && (
                                             news.articles.map((article) => (
-                                                <TouchableOpacity
-                                                    onPress={() => {
-                                                        Linking.openURL(article.url)
-                                                    }}
-                                                >
+
                                                     <Box
                                                         bgColor={theme.colors.newsCard}
                                                         shadow={4}
@@ -141,15 +167,34 @@ export default function NewsPage(){
                                                         height={400}
                                                         position={'relative'}
                                                     >
+
                                                         <AspectRatio width={'100%'} height={'50%'} ratio={1.76} >
-                                                            <Image  width={'100%'} source={{ uri : article.urlToImage }} alt={"asdas"} />
+                                                            <Image width={'100%'} source={{ uri : article.urlToImage }} alt={"asdas"} />
                                                         </AspectRatio>
                                                         <Heading padding={2} size={'sm'} color={theme.colors.newsCardText} >{article.title}</Heading>
                                                         <ScrollView>
                                                             <Text padding={2} color={theme.colors.newsCardText}>{article.description}</Text>
                                                         </ScrollView>
+                                                        <TouchableOpacity
+                                                            onPress={() => onShare(article.title,article.url)}
+                                                        >
+                                                            <Box
+                                                                p={2}
+                                                                width={10}
+                                                                position={'absolute'}
+                                                                bottom={3}
+                                                                style={{
+                                                                    backdropFilter: 'blur(5px)'
+                                                                }}
+                                                                right={3}
+                                                                bgColor={rgbaColor(255,255,255,0.1)}
+                                                                rounded={"full"}
+                                                            >
+                                                                <MaterialCommunityIcons name={"share"} color={'#90ee90'} size={24} />
+                                                            </Box>
+                                                        </TouchableOpacity>
                                                     </Box>
-                                                </TouchableOpacity>
+
                                             ))
                                         )
                                     }
