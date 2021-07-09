@@ -41,7 +41,7 @@ export default function HomeScreen(props){
                     bg={'#db2777'}
                 >
                     <Text bold position={'absolute'} color={'white'} top={0} m={[4,4,8]}>
-                        Willkommen zurück
+                        Welcome Back
                     </Text>
                 </Box>
                 <Box
