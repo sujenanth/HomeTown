@@ -1,7 +1,9 @@
 import React, {useState} from "react";
-import {Box, Center, Container, Heading, HStack, NativeBaseProvider} from "native-base";
+import {Box, Center, Container, Heading, HStack, NativeBaseProvider, Text} from "native-base";
 import Header from "./Header";
 import {useTheme} from "@react-navigation/native";
+import Heads from "../utils/coins/Heads";
+import View from "react-native-web/dist/vendor/react-native/Animated/components/AnimatedView";
 
 export default function CoinFlip(){
 
@@ -24,7 +26,7 @@ export default function CoinFlip(){
                     width={'100%'}
                     p={5}
                 >
-                    <Heading>asddas</Heading>
+
                 </Box>
             </Center>
         </NativeBaseProvider>
