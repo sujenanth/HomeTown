@@ -25,6 +25,7 @@ import * as Haptics from "expo-haptics";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {rgbaColor} from "react-native-reanimated/src/reanimated2/Colors";
 import {apikey} from "../utils/api-keys";
+import {Heads} from "../utils/coins/Heads";
 
 
 const counter = [3,3,3];

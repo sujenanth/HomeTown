@@ -1,9 +1,11 @@
 import React, {useState} from "react";
-import {Box, Center, Container, Heading, HStack, NativeBaseProvider, Text} from "native-base";
+import {Box, Center, Container, Heading, HStack, Image, NativeBaseProvider, Text} from "native-base";
 import Header from "./Header";
 import {useTheme} from "@react-navigation/native";
 import Heads from "../utils/coins/Heads";
 import View from "react-native-web/dist/vendor/react-native/Animated/components/AnimatedView";
+import Svg, {Path} from "react-native-svg";
+import Tails from '../utils/coins/tails.png'
 
 export default function CoinFlip(){
 
@@ -21,13 +23,11 @@ export default function CoinFlip(){
                 height={'75%'}
                 p={5}
             >
-                <Box
-                    height={'100%'}
-                    width={'100%'}
-                    p={5}
-                >
-
-                </Box>
+                <Image
+                    width={'50%'}
+                    source={require('../utils/coins/tails.png')}
+                       alt={"tails"}
+                />
             </Center>
         </NativeBaseProvider>
     )

@@ -14,6 +14,7 @@ import NewsPage from "./components/NewsPage";
 import { themes } from './utils/Theme';
 import WeatherApp from "./components/WeatherApp";
 import CoinFlip from "./components/CoinFlip";
+import {Heads} from "./utils/coins/Heads";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
