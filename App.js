@@ -13,7 +13,7 @@ import UserStores from "./Stores/UserStores";
 import NewsPage from "./components/NewsPage";
 import { themes } from './utils/Theme';
 import WeatherApp from "./components/WeatherApp";
-
+import CoinFlip from "./components/CoinFlip";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -64,6 +64,7 @@ export default function App() {
         <Tab.Screen initialParams={{ setTask: setTasks, tasks: tasks }} name={"To-Do"} component={ToDoApp} options={{ tabBarBadge: tasks === 0 ? null : tasks }} />
         <Tab.Screen name={"News"} component={NewsPage}/>
         <Tab.Screen name={"Weather"} component={WeatherApp}/>
+        <Tab.Screen name={"Coin Flip"} component={CoinFlip}/>
       </Tab.Navigator>
     </NavigationContainer>
   );
